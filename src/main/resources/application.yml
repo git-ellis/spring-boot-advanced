@@ -1,0 +1,33 @@
+server:
+  port: 8088
+
+logging:
+  level:
+    root: info
+    com.example: debug
+  file: logs/log.log
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring-boot-advanced?user=postgres&password=pwd&charSet=utf-8
+    driver-class-name: org.postgresql.Driver
+    data-username: postgres
+    data-password: pwd
+
+  jpa:
+    hibernate:
+      ddl-auto: update # create 每次重建, update 會先查詢是否有該表，然後修改該表, create-drop, none
+      temp:
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+
+  devtools:
+    livereload:
+      enabled: true #是否支持livereload
+      port: 35729
+    restart:
+      enabled: true #是否支持热部署
