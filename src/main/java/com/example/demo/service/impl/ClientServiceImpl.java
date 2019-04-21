@@ -2,11 +2,13 @@ package com.example.demo.service.impl;
 
 import com.example.demo.domain.Client;
 import com.example.demo.domain.ClientRepository;
+import com.example.demo.exception.ClientNotFoundException;
 import com.example.demo.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -25,7 +27,11 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client getClientById(long id) {
-       return ur.findById(id).orElse(new Client());
+        Client client = ur.findClient(id);
+        if (Objects.isNull(client))
+            throw new ClientNotFoundException("該用戶不存在");
+
+        return client;
     }
 
     @Override

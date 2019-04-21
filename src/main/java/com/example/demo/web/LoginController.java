@@ -5,9 +5,12 @@ import com.example.demo.form.ClientForm;
 import com.example.demo.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.validation.Valid;
 
 @Controller
 public class LoginController {
@@ -16,7 +19,8 @@ public class LoginController {
     private ClientService cs;
 
     @GetMapping("/registration")
-    public String showRegistrationPage() {
+    public String showRegistrationPage(Model model) {
+        model.addAttribute("clientForm", new ClientForm());
         return "registration";
     }
 
@@ -31,9 +35,27 @@ public class LoginController {
 //    }
 
     @PostMapping("/register")
-    public String register(ClientForm form) {
-        Client client = form.covert();
+    public String register(@Valid ClientForm clientForm, BindingResult br) {
+        if (!clientForm.confirmPassword())
+            br.rejectValue("confirmedPwd", "confirmedPwdError", "兩次密碼輸入不一致");
+        if (br.hasErrors())
+            return "registration";
+
+//        if (br.hasErrors()) {
+//            for (FieldError fe : br.getFieldErrors()) {
+//                System.out.println("Field = " + fe.getField());
+//                System.out.print(" Code = " + fe.getCode());
+//                System.out.print(" DefaultMessage = " + fe.getDefaultMessage() + " \n");
+//            }
+//        }
+//
+        Client client = clientForm.covert();
         cs.addClient(client);
         return "redirect:/login";
+    }
+
+    @GetMapping("/exception")
+    public String show500Page() {
+        throw new RuntimeException();
     }
 }

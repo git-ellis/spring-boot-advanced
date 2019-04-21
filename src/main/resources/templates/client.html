@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+    <div class="container" style="max-width: 550px; margin-top: 100px;">
+        <div class="card">
+            <div class="card-header">
+                客戶資料
+            </div>
+            <div class="card-body" th:object="${client}">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>用戶名</th>
+                        <th>密碼</th>
+                        <th>手機</th>
+                        <th>性別</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td th:text="*{name}"></td>
+                        <td th:text="*{password}"></td>
+                        <td th:text="*{email}"></td>
+                        <td th:text="*{phone}"></td>
+                        <td>
+                            <span th:if="*{gender == 'M'}">男生</span>
+                            <span th:if="*{gender == 'F'}">女生</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+<!--                <p><strong></strong>&nbsp<span ></span></p>-->
+<!--                <p><strong>密碼:</strong>&nbsp<span th:text="*{password}"></span></p>-->
+<!--                <p><strong>Email:</strong>&nbsp<span th:text="*{email}"></span></p>-->
+<!--                <p><strong>手機:</strong>&nbsp<span th:text="*{phone}"></span></p>-->
+<!--                <p>-->
+<!--                    <strong>性別:</strong>&nbsp-->
+<!--                </p>-->
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+</html>
